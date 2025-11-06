@@ -20,6 +20,13 @@ body {
       text-align: center;
   }
 
+  .active-counter {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+  }
+
   .input-section {
       display: flex;
       gap: 10px;
@@ -32,6 +39,15 @@ body {
       border: 2px solid #ddd;
       border-radius: 5px;
       font-size: 16px;
+  }
+
+  .priority-select {
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: white;
+      cursor: pointer;
   }
 
   button {
@@ -65,6 +81,29 @@ body {
   .todo-item.completed {
       text-decoration: line-through;
       opacity: 0.6;
+  }
+
+  .priority-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+      margin-left: 10px;
+      text-transform: uppercase;
+  }
+
+  .priority-high {
+      background-color: #ff4444;
+  }
+
+  .priority-medium {
+      background-color: #ffaa00;
+  }
+
+  .priority-low {
+      background-color: #44aa44;
   }
 
   .delete-btn {
@@ -111,6 +150,10 @@ body {
       color: #ffffff;
   }
 
+  body.dark-mode .active-counter {
+      color: #aaaaaa;
+  }
+
   body.dark-mode #todoInput {
       background-color: #404040;
       color: #ffffff;
@@ -120,4 +163,10 @@ body {
   body.dark-mode .todo-item {
       background: #404040;
       color: #ffffff;
+  }
+
+  body.dark-mode .priority-select {
+      background-color: #404040;
+      color: #ffffff;
+      border-color: #555;
   }
