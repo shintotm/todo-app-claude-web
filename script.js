@@ -7,80 +7,99 @@
 
 let todos = [];
 
-   function addTodo() {
-       const input = document.getElementById('todoInput');
-       const todoText = input.value.trim();
-       
-       if (todoText === '') {
-           alert('Please enter a task!');
-           return;
-       }
-       
-       const todo = {
-           id: Date.now(),
-           text: todoText,
-           completed: false
-       };
-       
-       todos.push(todo);
-       input.value = '';
-       renderTodos();
-   }
+  function addTodo() {
+      const input = document.getElementById('todoInput');
+      const todoText = input.value.trim();
 
-   function toggleTodo(id) {
-       const todo = todos.find(t => t.id === id);
-       if (todo) {
-           todo.completed = !todo.completed;
-           renderTodos();
-       }
-   }
+      if (todoText === '') {
+          alert('Please enter a task!');
+          return;
+      }
 
-   function deleteTodo(id) {
-       todos = todos.filter(t => t.id !== id);
-       renderTodos();
-   }
+      const todo = {
+          id: Date.now(),
+          text: todoText,
+          completed: false
+      };
 
-   function clearCompleted() {
-       todos = todos.filter(t => !t.completed);
-       renderTodos();
-   function updateActiveCounter() {
-       const activeCount = todos.filter(todo => !todo.completed).length;
-       const counter = document.getElementById('activeCounter');
-       if (counter) {
-           counter.textContent = `Active tasks: ${activeCount}`;
-       }
-   }
+      todos.push(todo);
+      input.value = '';
+      renderTodos();
+  }
 
-   function renderTodos() {
-       const todoList = document.getElementById('todoList');
-       todoList.innerHTML = '';
+  function toggleTodo(id) {
+      const todo = todos.find(t => t.id === id);
+      if (todo) {
+          todo.completed = !todo.completed;
+          renderTodos();
+      }
+  }
 
-       todos.forEach(todo => {
-           const li = document.createElement('li');
-           li.className = 'todo-item' + (todo.completed ? ' completed' : '');
-           li.innerHTML = `
-               <input type="checkbox"
-                      ${todo.completed ? 'checked' : ''}
-                      onchange="toggleTodo(${todo.id})">
-               <span style="margin-left: 10px;">${todo.text}</span>
-               <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
-           `;
-           todoList.appendChild(li);
-       });
+  function deleteTodo(id) {
+      todos = todos.filter(t => t.id !== id);
+      renderTodos();
+  }
 
-       // Show/hide Clear Completed button based on whether there are completed tasks
-       const clearCompletedBtn = document.getElementById('clearCompletedBtn');
-       const hasCompletedTasks = todos.some(t => t.completed);
-       clearCompletedBtn.style.display = hasCompletedTasks ? 'block' : 'none';
-       updateActiveCounter();
-   }
+  function renderTodos() {
+      const todoList = document.getElementById('todoList');
+      todoList.innerHTML = '';
 
-   // Allow Enter key to add todo
-   document.addEventListener('DOMContentLoaded', function() {
-       const input = document.getElementById('todoInput');
-       input.addEventListener('keypress', function(e) {
-           if (e.key === 'Enter') {
-               addTodo();
-           }
-       });
-   });
+      todos.forEach(todo => {
+          const li = document.createElement('li');
+          li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+          li.innerHTML = `
+              <input type="checkbox"
+                     ${todo.completed ? 'checked' : ''}
+                     onchange="toggleTodo(${todo.id})">
+              <span style="margin-left: 10px;">${todo.text}</span>
+              <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
+          `;
+          todoList.appendChild(li);
+      });
+  }
+
+  // Dark Mode Toggle Functionality
+  function toggleDarkMode() {
+      const body = document.body;
+      const darkModeToggle = document.getElementById('darkModeToggle');
+
+      body.classList.toggle('dark-mode');
+
+      // Update button text based on current mode
+      if (body.classList.contains('dark-mode')) {
+          darkModeToggle.textContent = '☀️ Light Mode';
+          localStorage.setItem('darkMode', 'enabled');
+      } else {
+          darkModeToggle.textContent = '🌙 Dark Mode';
+          localStorage.setItem('darkMode', 'disabled');
+      }
+  }
+
+  // Load dark mode preference on page load
+  function loadDarkModePreference() {
+      const darkMode = localStorage.getItem('darkMode');
+      const body = document.body;
+      const darkModeToggle = document.getElementById('darkModeToggle');
+
+      if (darkMode === 'enabled') {
+          body.classList.add('dark-mode');
+          darkModeToggle.textContent = '☀️ Light Mode';
+      }
+  }
+
+  // Allow Enter key to add todo
+  document.addEventListener('DOMContentLoaded', function() {
+      const input = document.getElementById('todoInput');
+      input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+              addTodo();
+          }
+      });
+
+      // Set up dark mode toggle
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      darkModeToggle.addEventListener('click', toggleDarkMode);
+
+      // Load dark mode preference
+      loadDarkModePreference();
+  });
