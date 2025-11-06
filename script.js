@@ -19,7 +19,8 @@ let todos = [];
       const todo = {
           id: Date.now(),
           text: todoText,
-          completed: false
+          completed: false,
+          timestamp: Date.now()
       };
 
       todos.push(todo);
@@ -102,6 +103,37 @@ let todos = [];
           body.classList.add('dark-mode');
           darkModeToggle.textContent = '☀️ Light Mode';
       }
+  }
+
+  // Export todos to JSON file
+  function exportTodos() {
+      // Create export data with all required fields
+      const exportData = todos.map(todo => ({
+          id: todo.id,
+          text: todo.text,
+          completed: todo.completed,
+          timestamp: todo.timestamp || todo.id // Use timestamp if available, fallback to id
+      }));
+
+      // Convert to JSON string with pretty formatting
+      const jsonString = JSON.stringify(exportData, null, 2);
+
+      // Create a Blob with the JSON data
+      const blob = new Blob([jsonString], { type: 'application/json' });
+
+      // Create a download link
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'todos.json';
+
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
   }
 
   // Allow Enter key to add todo
