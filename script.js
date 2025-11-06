@@ -40,6 +40,14 @@ let todos = [];
        renderTodos();
    }
 
+   function updateActiveCounter() {
+       const activeCount = todos.filter(todo => !todo.completed).length;
+       const counter = document.getElementById('activeCounter');
+       if (counter) {
+           counter.textContent = `Active tasks: ${activeCount}`;
+       }
+   }
+
    function renderTodos() {
        const todoList = document.getElementById('todoList');
        todoList.innerHTML = '';
@@ -56,6 +64,8 @@ let todos = [];
            `;
            todoList.appendChild(li);
        });
+
+       updateActiveCounter();
    }
 
    // Allow Enter key to add todo
