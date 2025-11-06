@@ -43,6 +43,12 @@ let todos = [];
    function clearCompleted() {
        todos = todos.filter(t => !t.completed);
        renderTodos();
+   function updateActiveCounter() {
+       const activeCount = todos.filter(todo => !todo.completed).length;
+       const counter = document.getElementById('activeCounter');
+       if (counter) {
+           counter.textContent = `Active tasks: ${activeCount}`;
+       }
    }
 
    function renderTodos() {
@@ -66,6 +72,7 @@ let todos = [];
        const clearCompletedBtn = document.getElementById('clearCompletedBtn');
        const hasCompletedTasks = todos.some(t => t.completed);
        clearCompletedBtn.style.display = hasCompletedTasks ? 'block' : 'none';
+       updateActiveCounter();
    }
 
    // Allow Enter key to add todo
