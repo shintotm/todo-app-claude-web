@@ -209,6 +209,26 @@ body {
       color: #ffffff;
   }
 
+  /* Clear Completed Button */
+  .clear-completed-btn {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #ff9800;
+  }
+
+  .clear-completed-btn:hover {
+      background-color: #e68900;
+  }
+
+  /* Export Todos Button */
+  .export-todos-btn {
+      width: 100%;
+      margin-top: 10px;
+      background-color: #2196F3;
+  }
+
+  .export-todos-btn:hover {
+      background-color: #0b7dda;
   body.dark-mode .priority-select {
   body.dark-mode .filter-btn {
       background-color: #404040;
