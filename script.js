@@ -6,6 +6,7 @@
  */
 
 let todos = [];
+let currentFilter = 'all';
 
   function addTodo() {
       const input = document.getElementById('todoInput');
@@ -51,11 +52,40 @@ let todos = [];
       renderTodos();
   }
 
+  function setFilter(filter) {
+      currentFilter = filter;
+
+      // Update active button styling
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      filterButtons.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.getAttribute('data-filter') === filter) {
+              btn.classList.add('active');
+          }
+      });
+
+      renderTodos();
+  }
+
+  function getFilteredTodos() {
+      switch(currentFilter) {
+          case 'active':
+              return todos.filter(todo => !todo.completed);
+          case 'completed':
+              return todos.filter(todo => todo.completed);
+          case 'all':
+          default:
+              return todos;
+      }
+  }
+
   function renderTodos() {
       const todoList = document.getElementById('todoList');
       todoList.innerHTML = '';
 
-      todos.forEach(todo => {
+      const filteredTodos = getFilteredTodos();
+
+      filteredTodos.forEach(todo => {
           const li = document.createElement('li');
           li.className = 'todo-item' + (todo.completed ? ' completed' : '');
           li.innerHTML = `
