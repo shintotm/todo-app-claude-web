@@ -40,22 +40,32 @@ let todos = [];
        renderTodos();
    }
 
+   function clearCompleted() {
+       todos = todos.filter(t => !t.completed);
+       renderTodos();
+   }
+
    function renderTodos() {
        const todoList = document.getElementById('todoList');
        todoList.innerHTML = '';
-       
+
        todos.forEach(todo => {
            const li = document.createElement('li');
            li.className = 'todo-item' + (todo.completed ? ' completed' : '');
            li.innerHTML = `
-               <input type="checkbox" 
-                      ${todo.completed ? 'checked' : ''} 
+               <input type="checkbox"
+                      ${todo.completed ? 'checked' : ''}
                       onchange="toggleTodo(${todo.id})">
                <span style="margin-left: 10px;">${todo.text}</span>
                <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
            `;
            todoList.appendChild(li);
        });
+
+       // Show/hide Clear Completed button based on whether there are completed tasks
+       const clearCompletedBtn = document.getElementById('clearCompletedBtn');
+       const hasCompletedTasks = todos.some(t => t.completed);
+       clearCompletedBtn.style.display = hasCompletedTasks ? 'block' : 'none';
    }
 
    // Allow Enter key to add todo
