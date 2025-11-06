@@ -6,10 +6,13 @@
  */
 
 let todos = [];
+let currentFilter = 'all';
 
   function addTodo() {
       const input = document.getElementById('todoInput');
+      const prioritySelect = document.getElementById('prioritySelect');
       const todoText = input.value.trim();
+      const priority = prioritySelect.value;
 
       if (todoText === '') {
           alert('Please enter a task!');
@@ -19,11 +22,13 @@ let todos = [];
       const todo = {
           id: Date.now(),
           text: todoText,
-          completed: false
+          completed: false,
+          priority: priority
       };
 
       todos.push(todo);
       input.value = '';
+      prioritySelect.value = 'medium'; // Reset to default
       renderTodos();
   }
 
@@ -97,14 +102,44 @@ let todos = [];
       renderTodos();
   }
 
+  function setFilter(filter) {
+      currentFilter = filter;
+
+      // Update active button styling
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      filterButtons.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.getAttribute('data-filter') === filter) {
+              btn.classList.add('active');
+          }
+      });
+
+      renderTodos();
+  }
+
+  function getFilteredTodos() {
+      switch(currentFilter) {
+          case 'active':
+              return todos.filter(todo => !todo.completed);
+          case 'completed':
+              return todos.filter(todo => todo.completed);
+          case 'all':
+          default:
+              return todos;
+      }
+  }
+
   function renderTodos() {
       const todoList = document.getElementById('todoList');
       todoList.innerHTML = '';
 
-      todos.forEach(todo => {
+      const filteredTodos = getFilteredTodos();
+
+      filteredTodos.forEach(todo => {
           const li = document.createElement('li');
           li.className = 'todo-item' + (todo.completed ? ' completed' : '');
           li.setAttribute('data-id', todo.id);
+          const priority = todo.priority || 'medium'; // Default to medium for old todos
           li.innerHTML = `
               <input type="checkbox"
                      ${todo.completed ? 'checked' : ''}
@@ -112,6 +147,8 @@ let todos = [];
               <span class="todo-text" style="margin-left: 10px;">${todo.text}</span>
               <input type="text" class="edit-input" style="display: none; margin-left: 10px;">
               <button class="edit-btn" onclick="editTodo(${todo.id})">Edit</button>
+              <span class="priority-badge priority-${priority}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
+              <span style="margin-left: 10px;">${todo.text}</span>
               <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
               <button class="save-btn" style="display: none;" onclick="saveEdit(${todo.id})">Save</button>
               <button class="cancel-btn" style="display: none;" onclick="cancelEdit(${todo.id})">Cancel</button>
