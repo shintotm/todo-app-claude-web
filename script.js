@@ -40,6 +40,17 @@ let todos = [];
       renderTodos();
   }
 
+  function updateActiveCounter() {
+      const activeTasks = todos.filter(todo => !todo.completed).length;
+      const counter = document.getElementById('activeCounter');
+      counter.textContent = `Active tasks: ${activeTasks}`;
+  }
+
+  function clearCompleted() {
+      todos = todos.filter(todo => !todo.completed);
+      renderTodos();
+  }
+
   function renderTodos() {
       const todoList = document.getElementById('todoList');
       todoList.innerHTML = '';
@@ -56,6 +67,12 @@ let todos = [];
           `;
           todoList.appendChild(li);
       });
+
+      // Update active counter and clear completed button visibility
+      updateActiveCounter();
+      const clearBtn = document.getElementById('clearCompletedBtn');
+      const completedTasks = todos.filter(todo => todo.completed).length;
+      clearBtn.style.display = completedTasks > 0 ? 'block' : 'none';
   }
 
   // Dark Mode Toggle Functionality
