@@ -23,7 +23,7 @@ let currentFilter = 'all';
           id: Date.now(),
           text: todoText,
           completed: false,
-          timestamp: Date.now()
+          timestamp: Date.now(),
           priority: priority
       };
 
@@ -147,9 +147,8 @@ let currentFilter = 'all';
                      onchange="toggleTodo(${todo.id})">
               <span class="todo-text" style="margin-left: 10px;">${todo.text}</span>
               <input type="text" class="edit-input" style="display: none; margin-left: 10px;">
-              <button class="edit-btn" onclick="editTodo(${todo.id})">Edit</button>
               <span class="priority-badge priority-${priority}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
-              <span style="margin-left: 10px;">${todo.text}</span>
+              <button class="edit-btn" onclick="editTodo(${todo.id})">Edit</button>
               <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
               <button class="save-btn" style="display: none;" onclick="saveEdit(${todo.id})">Save</button>
               <button class="cancel-btn" style="display: none;" onclick="cancelEdit(${todo.id})">Cancel</button>
