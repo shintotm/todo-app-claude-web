@@ -199,7 +199,8 @@ let currentFilter = 'all';
           id: todo.id,
           text: todo.text,
           completed: todo.completed,
-          timestamp: todo.timestamp || todo.id // Use timestamp if available, fallback to id
+          timestamp: todo.timestamp || todo.id, // Use timestamp if available, fallback to id
+          priority: todo.priority || 'medium' // Include priority field
       }));
 
       // Convert to JSON string with pretty formatting
