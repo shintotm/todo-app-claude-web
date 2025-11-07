@@ -57,6 +57,52 @@ let currentFilter = 'all';
       renderTodos();
   }
 
+  function editTodo(id) {
+      const todoItem = document.querySelector(`[data-id="${id}"]`);
+      const textSpan = todoItem.querySelector('.todo-text');
+      const editInput = todoItem.querySelector('.edit-input');
+      const editBtn = todoItem.querySelector('.edit-btn');
+      const deleteBtn = todoItem.querySelector('.delete-btn');
+      const saveBtn = todoItem.querySelector('.save-btn');
+      const cancelBtn = todoItem.querySelector('.cancel-btn');
+
+      // Show edit mode
+      textSpan.style.display = 'none';
+      editInput.style.display = 'inline-block';
+      editInput.value = textSpan.textContent;
+      editBtn.style.display = 'none';
+      deleteBtn.style.display = 'none';
+      saveBtn.style.display = 'inline-block';
+      cancelBtn.style.display = 'inline-block';
+
+      // Focus on input
+      editInput.focus();
+      editInput.select();
+  }
+
+  function saveEdit(id) {
+      const todoItem = document.querySelector(`[data-id="${id}"]`);
+      const editInput = todoItem.querySelector('.edit-input');
+      const newText = editInput.value.trim();
+
+      if (newText === '') {
+          alert('Task text cannot be empty!');
+          return;
+      }
+
+      // Update the todo
+      const todo = todos.find(t => t.id === id);
+      if (todo) {
+          todo.text = newText;
+          renderTodos();
+      }
+  }
+
+  function cancelEdit(id) {
+      // Just re-render to reset the UI
+      renderTodos();
+  }
+
   function setFilter(filter) {
       currentFilter = filter;
 
@@ -93,14 +139,20 @@ let currentFilter = 'all';
       filteredTodos.forEach(todo => {
           const li = document.createElement('li');
           li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+          li.setAttribute('data-id', todo.id);
           const priority = todo.priority || 'medium'; // Default to medium for old todos
           li.innerHTML = `
               <input type="checkbox"
                      ${todo.completed ? 'checked' : ''}
                      onchange="toggleTodo(${todo.id})">
+              <span class="todo-text" style="margin-left: 10px;">${todo.text}</span>
+              <input type="text" class="edit-input" style="display: none; margin-left: 10px;">
+              <button class="edit-btn" onclick="editTodo(${todo.id})">Edit</button>
               <span class="priority-badge priority-${priority}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
               <span style="margin-left: 10px;">${todo.text}</span>
               <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
+              <button class="save-btn" style="display: none;" onclick="saveEdit(${todo.id})">Save</button>
+              <button class="cancel-btn" style="display: none;" onclick="cancelEdit(${todo.id})">Cancel</button>
           `;
           todoList.appendChild(li);
       });

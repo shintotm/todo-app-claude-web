@@ -127,6 +127,7 @@ body {
       opacity: 0.6;
   }
 
+  .edit-btn {
   .priority-badge {
       display: inline-block;
       padding: 4px 10px;
@@ -152,6 +153,17 @@ body {
 
   .delete-btn {
       margin-left: auto;
+      background-color: #2196F3;
+      padding: 5px 10px;
+      font-size: 14px;
+  }
+
+  .edit-btn:hover {
+      background-color: #0b7dda;
+  }
+
+  .delete-btn {
+      margin-left: 5px;
       background-color: #f44336;
       padding: 5px 10px;
       font-size: 14px;
@@ -159,6 +171,37 @@ body {
 
   .delete-btn:hover {
       background-color: #da190b;
+  }
+
+  .save-btn {
+      margin-left: auto;
+      background-color: #4CAF50;
+      padding: 5px 10px;
+      font-size: 14px;
+  }
+
+  .save-btn:hover {
+      background-color: #45a049;
+  }
+
+  .cancel-btn {
+      margin-left: 5px;
+      background-color: #ff9800;
+      padding: 5px 10px;
+      font-size: 14px;
+  }
+
+  .cancel-btn:hover {
+      background-color: #e68900;
+  }
+
+  .edit-input {
+      flex: 1;
+      padding: 5px;
+      border: 2px solid #2196F3;
+      border-radius: 5px;
+      font-size: 14px;
+      margin-right: 10px;
   }
 
   /* Dark Mode Toggle Button */
@@ -209,6 +252,32 @@ body {
       color: #ffffff;
   }
 
+  body.dark-mode .edit-input {
+      background-color: #404040;
+      color: #ffffff;
+      border-color: #2196F3;
+  }
+
+  /* Active counter styling */
+  .active-counter {
+      text-align: center;
+      color: #666;
+      margin-bottom: 10px;
+  }
+
+  body.dark-mode .active-counter {
+      color: #aaa;
+  }
+
+  /* Clear completed button */
+  .clear-completed-btn {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #f44336;
+  }
+
+  .clear-completed-btn:hover {
+      background-color: #da190b;
   /* Clear Completed Button */
   .clear-completed-btn {
       width: 100%;
